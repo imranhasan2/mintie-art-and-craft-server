@@ -31,10 +31,19 @@ async function run() {
 
         const userCollection = client.db('userDB').collection('user')
 
+        const craftCollection =client.db('craftDB').collection('craft')
+
         app.post('/user', async (req, res) => {
             const user = req.body
             const result = await userCollection.insertOne(user)
             res.send(result)
+        })
+
+
+
+        app.post('/craft',async(req,res) => {
+            const item = req.body
+            console.log(item)
         })
 
 
