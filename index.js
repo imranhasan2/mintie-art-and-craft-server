@@ -32,6 +32,7 @@ async function run() {
         const userCollection = client.db('userDB').collection('user')
 
         const craftCollection = client.db('craftDB').collection('craft')
+        const userItemCollection = client.db('userItem').collection('item')
 
         app.post('/user', async (req, res) => {
             const user = req.body
@@ -39,12 +40,49 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/craft',async(req,res) => {
-            const cursor = craftCollection.find()
-            const result = await cursor.toArray()
-            res.send (result)
+        app.get('/art/:email', async(req,res) =>{
+            const email = req.params.email;
+            
+            const query = { email : req.params.email}
+            const result = await userItemCollection.find(query).toArray()
+
+            res.send(result)
 
         })
+
+        app.get('/artView/:id',async(req,res) =>{
+            const id =req.params.id;
+            const query = {_id : new ObjectId (id)}
+            const result = await userItemCollection.findOne(query)
+            res.send(result)
+        })
+
+        app.post('/item', async (req, res) => {
+            const userItem = req.body
+            const result = await userItemCollection.insertOne(userItem)
+
+            res.send(result)
+        })
+
+
+
+        app.get('/craft', async (req, res) => {
+            const cursor = craftCollection.find()
+            const result = await cursor.toArray()
+            res.send(result)
+
+        })
+
+        app.get('/craft/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await craftCollection.findOne(query)
+            res.send(result)
+        })
+
+
+
+
 
         app.post('/craft', async (req, res) => {
             const craft = req.body
