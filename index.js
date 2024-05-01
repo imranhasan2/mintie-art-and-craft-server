@@ -40,19 +40,19 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/art/:email', async(req,res) =>{
+        app.get('/art/:email', async (req, res) => {
             const email = req.params.email;
-            
-            const query = { email : req.params.email}
+
+            const query = { email: req.params.email }
             const result = await userItemCollection.find(query).toArray()
 
             res.send(result)
 
         })
 
-        app.get('/artView/:id',async(req,res) =>{
-            const id =req.params.id;
-            const query = {_id : new ObjectId (id)}
+        app.get('/artView/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
             const result = await userItemCollection.findOne(query)
             res.send(result)
         })
@@ -61,6 +61,15 @@ async function run() {
             const userItem = req.body
             const result = await userItemCollection.insertOne(userItem)
 
+            res.send(result)
+        })
+
+
+        app.get('/my/:email',async(req,res) =>{
+            const email = req.params.email;
+            const query ={email :req.params.email}
+            const result =await userItemCollection.find(query).toArray()
+           
             res.send(result)
         })
 
