@@ -65,13 +65,22 @@ async function run() {
         })
 
 
-        app.get('/my/:email',async(req,res) =>{
+        app.get('/my/:email', async (req, res) => {
             const email = req.params.email;
-            const query ={email :req.params.email}
-            const result =await userItemCollection.find(query).toArray()
-           
+            const query = { email: req.params.email }
+            const result = await userItemCollection.find(query).toArray()
+
             res.send(result)
         })
+
+
+        app.delete('/my/:email', async (req, res) => {
+            const email = req.params.email
+            const query = { email: req.params.email }
+            const result = await userItemCollection.deleteOne(query)
+            res.send(result);
+        })
+        
 
 
 
