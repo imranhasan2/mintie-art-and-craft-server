@@ -74,13 +74,22 @@ async function run() {
         })
 
 
-        app.delete('/my/:email', async (req, res) => {
-            const email = req.params.email
-            const query = { email: req.params.email }
+        app.delete('/my/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
             const result = await userItemCollection.deleteOne(query)
             res.send(result);
         })
-        
+
+
+
+        app.get('/my/:id',async(req,res) =>{
+            const id =req.params.id;
+            const query ={_id : new ObjectId(id)}
+            const result = await userCollection.findOne(query)
+            res.send(result)
+        })
+
 
 
 
